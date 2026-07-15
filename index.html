@@ -47,6 +47,36 @@ a{text-decoration:none;color:inherit}
 @keyframes naFloat{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @keyframes naGlow{0%,100%{opacity:.45}50%{opacity:.85}}
 @keyframes naSpin{to{transform:rotate(360deg)}}
+
+.na-grid-3{grid-template-columns:repeat(3,1fr)}
+.na-grid-2{grid-template-columns:repeat(2,1fr)}
+.na-hero-grid{grid-template-columns:1.08fr 0.92fr}
+.na-juliana-grid{grid-template-columns:0.85fr 1.15fr}
+
+@media (max-width:900px){
+  .na-grid-3,.na-hero-grid,.na-juliana-grid{grid-template-columns:1fr}
+  .na-juliana-grid{gap:40px!important}
+  .na-hero-grid{gap:44px!important}
+  .na-brand-link{margin-right:16px}
+  .na-nav-links{gap:18px!important}
+  .na-brand-text{font-size:14px!important}
+  nav a{font-size:11px!important}
+}
+@media (max-width:640px){
+  .na-grid-2{grid-template-columns:1fr}
+  .na-nav-links{display:none!important}
+  nav{height:66px!important}
+  .na-brand-text{font-size:14px!important}
+  section:not(#topo),footer{padding-top:56px!important;padding-bottom:56px!important}
+  section,footer{padding-left:18px!important;padding-right:18px!important}
+  #topo{padding-top:100px!important;padding-bottom:50px!important}
+  #topo h1{font-size:clamp(28px,7.5vw,40px)!important}
+  img[src$="juliana.jpeg"]{height:340px!important}
+  .na-offer-box{padding:34px 22px!important}
+}
+@media (max-width:400px){
+  .na-brand-text{display:none}
+}
 </style>
 </helmet>
 
@@ -55,15 +85,17 @@ a{text-decoration:none;color:inherit}
 <!-- ============ NAV ============ -->
 <nav style="position:fixed;top:0;left:0;right:0;z-index:120;height:74px;display:flex;align-items:center;background:rgba(58,32,41,0.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(199,163,109,0.22)">
   <div style="max-width:1180px;margin:0 auto;padding:0 24px;width:100%;display:flex;align-items:center;justify-content:space-between">
-    <a href="#topo" style="display:flex;align-items:center;gap:12px">
-      <img src="assets/logo.png" alt="NeuroAlquimia Feminina" style="width:44px;height:44px;object-fit:contain">
-      <span style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:#F4EAE3;letter-spacing:0.02em">NeuroAlquimia <span style="color:#C7A36D">Feminina</span></span>
+    <a href="#topo" class="na-brand-link" style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+      <img src="assets/logo.png" alt="NeuroAlquimia Feminina" style="width:44px;height:44px;object-fit:contain;flex-shrink:0">
+      <span class="na-brand-text" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:#F4EAE3;letter-spacing:0.02em;white-space:nowrap">NeuroAlquimia <span style="color:#C7A36D">Feminina</span></span>
     </a>
     <div style="display:flex;align-items:center;gap:34px">
-      <a href="#video" style="font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#E9D4B8" style-hover="color:#C7A36D">Vídeo</a>
-      <a href="#metodo" style="font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#E9D4B8" style-hover="color:#C7A36D">O Método</a>
-      <a href="#juliana" style="font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#E9D4B8" style-hover="color:#C7A36D">A Mentora</a>
-      <a href="{{ checkoutUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#C7A36D;color:#3A2029;padding:11px 22px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase" style-hover="background:#E9D4B8">Quero começar</a>
+      <div class="na-nav-links" style="display:flex;align-items:center;gap:34px">
+        <a href="#video" style="font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#E9D4B8;white-space:nowrap" style-hover="color:#C7A36D">Vídeo</a>
+        <a href="#metodo" style="font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#E9D4B8;white-space:nowrap" style-hover="color:#C7A36D">O Método</a>
+        <a href="#juliana" style="font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#E9D4B8;white-space:nowrap" style-hover="color:#C7A36D">A Mentora</a>
+      </div>
+      <a href="{{ checkoutUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#C7A36D;color:#3A2029;padding:11px 22px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;white-space:nowrap;flex-shrink:0" style-hover="background:#E9D4B8">Quero começar</a>
     </div>
   </div>
 </nav>
@@ -72,7 +104,7 @@ a{text-decoration:none;color:inherit}
 <section id="topo" style="position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 24px 70px;background:radial-gradient(130% 110% at 12% 32%,#8B5A3C 0%,#6b3f3f 30%,#56313C 55%,#3a222b 100%);overflow:hidden">
   <div style="position:absolute;top:-10%;right:-8%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(199,163,109,0.28),transparent 65%);animation:naGlow 7s ease-in-out infinite;pointer-events:none"></div>
   <img src="assets/logo.png" alt="" style="position:absolute;right:4%;bottom:-6%;width:340px;opacity:0.10;pointer-events:none">
-  <div style="position:relative;z-index:2;max-width:1180px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.08fr 0.92fr;gap:64px;align-items:center">
+  <div class="na-hero-grid" style="position:relative;z-index:2;max-width:1180px;margin:0 auto;width:100%;display:grid;gap:64px;align-items:center">
     <div>
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:26px">
         <span style="display:block;width:34px;height:1px;background:#C7A36D"></span>
@@ -151,7 +183,7 @@ a{text-decoration:none;color:inherit}
       <h2 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,4.4vw,50px);line-height:1.1;color:#3A2029;margin:16px 0 18px">Você vive presa no modo de sobrevivência?</h2>
       <p style="font-size:17px;line-height:1.75;color:#6b5b52">Seu cérebro foi programado para reagir a ameaças. Quando esse mecanismo vira rotina, ele apaga o seu entusiasmo, drena sua energia e faz você se distanciar de quem realmente é. Veja se você se reconhece:</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:900px;margin:0 auto 46px">
+    <div class="na-grid-2" style="display:grid;gap:18px;max-width:900px;margin:0 auto 46px">
       <div style="display:flex;align-items:flex-start;gap:16px;background:#FBF6F1;border:1px solid rgba(139,90,60,0.18);border-radius:10px;padding:24px 26px">
         <span style="flex-shrink:0;color:#8B5A3C;margin-top:2px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></span>
         <p style="font-size:15.5px;line-height:1.6;color:#4a3f38"><strong style="color:#3A2029;font-weight:600">Sente que perdeu a própria identidade</strong> — não reconhece mais a mulher que vê no espelho.</p>
@@ -188,7 +220,7 @@ a{text-decoration:none;color:inherit}
       <span style="font-size:12px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C7A36D">A neurociência por trás</span>
       <h2 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,4.4vw,50px);line-height:1.1;color:#F9F1E9;margin-top:16px">Da sobrevivência à reconstrução</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+    <div class="na-grid-3" style="display:grid;gap:22px">
       <div style="background:rgba(0,0,0,0.18);border:1px solid rgba(199,163,109,0.25);border-radius:12px;padding:36px 30px">
         <span style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:12px;background:rgba(199,163,109,0.15);color:#C7A36D;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg></span>
         <h3 style="font-family:'Playfair Display',serif;font-size:21px;color:#F9F1E9;margin-bottom:10px">A amígdala assume</h3>
@@ -216,7 +248,7 @@ a{text-decoration:none;color:inherit}
       <h2 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(32px,4.8vw,54px);line-height:1.06;color:#3A2029;margin:16px 0 14px">Método NeuroAlquimia Feminina</h2>
       <p style="font-size:17.5px;line-height:1.7;color:#6b5b52;font-weight:300">Um caminho de 21 dias para sair do piloto automático, reconstruir sua identidade e retomar o comando da sua própria mente.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:44px">
+    <div class="na-grid-3" style="display:grid;gap:24px;margin-bottom:44px">
       <div style="background:#FBF6F1;border:1px solid rgba(139,90,60,0.18);border-radius:12px;padding:38px 32px;box-shadow:0 4px 24px rgba(58,32,41,0.06)" style-hover="transform:translateY(-4px);box-shadow:0 16px 44px rgba(58,32,41,0.12)">
         <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:#C7A36D;letter-spacing:0.1em">01</span>
         <div style="width:34px;height:2px;background:#C7A36D;margin:14px 0 22px"></div>
@@ -236,26 +268,12 @@ a{text-decoration:none;color:inherit}
         <p style="font-size:15px;line-height:1.72;color:#5c5048">Ferramentas, reflexões e um roteiro de 21 dias para instalar novos hábitos cerebrais, reescrever padrões limitantes e reencontrar quem você é.</p>
       </div>
     </div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px">
-      <div style="display:flex;align-items:center;gap:12px;background:#3A2029;color:#F4EAE3;padding:16px 26px;border-radius:100px">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C7A36D" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
-        <span style="font-size:14px;font-weight:500">eBook completo</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px;background:#3A2029;color:#F4EAE3;padding:16px 26px;border-radius:100px">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C7A36D" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="m9 16 2 2 4-4"/></svg>
-        <span style="font-size:14px;font-weight:500">Roteiro de 21 dias</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px;background:#3A2029;color:#F4EAE3;padding:16px 26px;border-radius:100px">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C7A36D" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
-        <span style="font-size:14px;font-weight:500">2 vídeo aulas</span>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- ============ SOBRE JULIANA ============ -->
 <section id="juliana" style="padding:110px 24px;background:#F4EAE3">
-  <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:center">
+  <div class="na-juliana-grid" style="max-width:1080px;margin:0 auto;display:grid;gap:60px;align-items:center">
     <div style="position:relative">
       <div style="position:absolute;inset:-12px;border-radius:14px;background:radial-gradient(circle at 50% 40%,rgba(199,163,109,0.35),transparent 70%);filter:blur(6px)"></div>
       <div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(139,90,60,0.35);box-shadow:0 24px 54px rgba(58,32,41,0.2)">
@@ -295,7 +313,7 @@ a{text-decoration:none;color:inherit}
       <h2 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,4.4vw,50px);line-height:1.1;color:#3A2029;margin:16px 0 18px">Não é só mais um conteúdo de desenvolvimento pessoal</h2>
       <p style="font-size:17px;line-height:1.75;color:#6b5b52">A maioria fala de mindset e motivação. Aqui você une três campos raramente tratados juntos — e é essa combinação que gera transformação real e duradoura.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+    <div class="na-grid-3" style="display:grid;gap:24px">
       <div style="background:#FBF6F1;border:1px solid rgba(139,90,60,0.18);border-radius:12px;padding:38px 32px">
         <span style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:12px;background:rgba(139,90,60,0.1);color:#8B5A3C;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg></span>
         <h3 style="font-family:'Playfair Display',serif;font-size:21px;color:#3A2029;margin-bottom:12px">Neurociência aplicada</h3>
@@ -332,7 +350,7 @@ a{text-decoration:none;color:inherit}
       <span style="font-size:12px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#C7A36D">Transformações reais</span>
       <h2 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,4.4vw,48px);line-height:1.1;color:#F9F1E9;margin-top:16px">Mulheres que reprogramaram a própria mente</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+    <div class="na-grid-3" style="display:grid;gap:22px">
       <div style="background:rgba(0,0,0,0.2);border:1px solid rgba(199,163,109,0.28);border-radius:12px;padding:34px 30px">
         <div style="color:#C7A36D;letter-spacing:3px;font-size:14px;margin-bottom:18px">★★★★★</div>
         <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:16.5px;line-height:1.7;color:#EAD9CE;margin-bottom:26px">Eu vivia no piloto automático, exausta e travada. Em poucas semanas entendi o que estava me sabotando e voltei a sonhar — dessa vez, com um plano.</p>
@@ -369,7 +387,7 @@ a{text-decoration:none;color:inherit}
       <span style="font-size:12px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#8B5A3C">Bônus exclusivos</span>
       <h2 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,4.4vw,48px);line-height:1.1;color:#3A2029;margin-top:16px">Você leva ainda mais com você</h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+    <div class="na-grid-3" style="display:grid;gap:22px">
       <div style="background:#FBF6F1;border:1px solid rgba(139,90,60,0.2);border-radius:12px;padding:34px 30px;box-shadow:0 4px 24px rgba(58,32,41,0.06)">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><span style="font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#3A2029;background:#C7A36D;padding:5px 13px;border-radius:100px">Bônus 01</span></div>
         <span style="display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:12px;background:rgba(139,90,60,0.1);color:#8B5A3C;margin-bottom:20px"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3z"/><path d="M12 3v18M3 6l9 3 9-3"/></svg></span>
@@ -399,7 +417,7 @@ a{text-decoration:none;color:inherit}
       <span style="font-size:12px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#8B5A3C">Sua transformação começa aqui</span>
       <h2 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,4.4vw,48px);line-height:1.1;color:#3A2029;margin-top:16px">Garanta o seu acesso</h2>
     </div>
-    <div style="background:#3A2029;border:1px solid rgba(199,163,109,0.4);border-radius:18px;padding:52px 46px;box-shadow:0 30px 70px rgba(58,32,41,0.28);text-align:center">
+    <div class="na-offer-box" style="background:#3A2029;border:1px solid rgba(199,163,109,0.4);border-radius:18px;padding:52px 46px;box-shadow:0 30px 70px rgba(58,32,41,0.28);text-align:center">
       <span style="display:inline-block;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#3A2029;background:#C7A36D;padding:7px 18px;border-radius:100px;margin-bottom:26px">Acesso imediato</span>
       <h3 style="font-family:'Playfair Display',serif;font-size:27px;color:#F9F1E9;margin-bottom:28px">Método NeuroAlquimia Feminina</h3>
       <div style="display:flex;flex-direction:column;gap:14px;text-align:left;max-width:430px;margin:0 auto 30px">
@@ -409,7 +427,7 @@ a{text-decoration:none;color:inherit}
         <div style="display:flex;align-items:flex-start;gap:13px;color:#EAD9CE;font-size:15.5px"><svg width="20" height="20" style="flex-shrink:0;margin-top:2px" viewBox="0 0 24 24" fill="none" stroke="#C7A36D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> <span><strong style="color:#F9F1E9;font-weight:600">Bônus:</strong> Checklist da Estagnação Invisível</span></div>
       </div>
       <div style="border-top:1px solid rgba(199,163,109,0.25);padding-top:24px;margin-bottom:4px"><span style="font-size:14px;color:#a68a80">Valor percebido: <span style="text-decoration:line-through">R$ 297+</span></span></div>
-      <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:6px"><span style="font-size:16px;color:#C7A36D">hoje, apenas</span><span style="font-family:'Playfair Display',serif;font-size:58px;color:#F9F1E9;line-height:1">R$ 52</span></div>
+      <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:6px"><span style="font-size:16px;color:#C7A36D">hoje, apenas</span><span style="font-family:'Playfair Display',serif;font-size:clamp(38px,11vw,58px);color:#F9F1E9;line-height:1">R$ 52</span></div>
       <p style="font-size:13px;color:#a68a80;margin-bottom:32px">ou 12x de R$ 4,33 · pagamento único</p>
       <a href="{{ checkoutUrl }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#C7A36D;color:#3A2029;padding:20px;border-radius:8px;font-size:15px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;box-shadow:0 14px 34px rgba(199,163,109,0.4)" style-hover="background:#E9D4B8;transform:translateY(-2px)">Quero começar agora
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
