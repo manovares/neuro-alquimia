@@ -119,7 +119,8 @@ input:focus{border-color:#C7A36D!important}
       <form id="lead-form" class="mb-form" onsubmit="return false">
         <input id="lead-name" type="text" placeholder="Seu primeiro nome" autocomplete="given-name">
         <input id="lead-email" type="email" placeholder="Seu melhor e-mail" autocomplete="email">
-        <p id="lead-error" class="mb-error">Digite um e-mail válido.</p>
+        <input id="lead-phone" type="tel" placeholder="Seu WhatsApp (com DDD)" autocomplete="tel" inputmode="tel">
+        <p id="lead-error" class="mb-error">Preencha um e-mail e um WhatsApp válidos.</p>
         <button id="lead-submit" type="submit" class="mb-btn">Quero meu Mapa gratuito</button>
         <p class="mb-fineprint">Seus dados estão seguros. Sem spam — apenas o seu presente.</p>
       </form>
@@ -149,13 +150,15 @@ input:focus{border-color:#C7A36D!important}
   var success = document.getElementById('lead-success');
 
   function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function validPhone(v) { return v.replace(/\D/g, '').length >= 10; }
 
   function handleSubmit() {
     if (btn.disabled) return;
     var name = document.getElementById('lead-name').value.trim();
     var email = document.getElementById('lead-email').value.trim();
+    var phone = document.getElementById('lead-phone').value.trim();
 
-    if (!validEmail(email)) {
+    if (!validEmail(email) || !validPhone(phone)) {
       errorEl.style.display = 'block';
       return;
     }
@@ -166,7 +169,7 @@ input:focus{border-color:#C7A36D!important}
     fetch(FORMSPREE_ENDPOINT, {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, email: email, origem: 'Mapa da Identidade Invisível (/minibook)' })
+      body: JSON.stringify({ name: name, email: email, phone: phone, origem: 'Mapa da Identidade Invisível (/minibook)' })
     }).catch(function () {}).then(function () {
       if (window.fbq) fbq('track', 'Lead');
       form.style.display = 'none';
