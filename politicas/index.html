@@ -125,5 +125,25 @@ a:hover{color:#3A2029}
 <script>
 document.getElementById('pol-year').textContent = new Date().getFullYear();
 </script>
+
+<!-- ============ AVISO DE COOKIES ============ -->
+<div id="na-cookie-banner" style="position:fixed;bottom:0;left:0;right:0;z-index:300;background:#241419;border-top:1px solid rgba(199,163,109,0.3);padding:18px 24px;display:none;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;box-shadow:0 -10px 30px rgba(0,0,0,0.3);font-family:'Montserrat',system-ui,sans-serif">
+  <p style="font-size:13.5px;line-height:1.6;color:#D8C3B6;margin:0;max-width:640px;flex:1;min-width:240px">Este site utiliza cookies para melhorar sua experiência, personalizar conteúdo e analisar o tráfego. Ao continuar navegando, você concorda com nossa <a href="/politicas" style="color:#C7A36D;text-decoration:underline">Política de Privacidade</a>.</p>
+  <button type="button" id="na-cookie-accept" style="flex-shrink:0;background:#C7A36D;color:#3A2029;border:none;padding:11px 26px;border-radius:6px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;font-family:'Montserrat',system-ui,sans-serif">Entendi</button>
+</div>
+<script>
+(function () {
+  try {
+    if (!localStorage.getItem('na_cookie_consent')) {
+      var banner = document.getElementById('na-cookie-banner');
+      banner.style.display = 'flex';
+      document.getElementById('na-cookie-accept').addEventListener('click', function () {
+        localStorage.setItem('na_cookie_consent', '1');
+        banner.style.display = 'none';
+      });
+    }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
