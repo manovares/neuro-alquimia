@@ -551,7 +551,7 @@ class Component extends DCLogic {
   closeCheckoutModal = () => this.setState({ checkoutModalOpen: false });
   stopPropagation = (e) => e.stopPropagation();
 
-  submitCheckout = async () => {
+  submitCheckout = () => {
     if (this.state.checkoutStatus === 'loading') return;
     const name = (document.getElementById('checkout-name') || {}).value?.trim() || '';
     const email = (document.getElementById('checkout-email') || {}).value?.trim() || '';
@@ -564,12 +564,12 @@ class Component extends DCLogic {
     }
     this.setState({ checkoutStatus: 'loading', checkoutError: '' });
     try {
-      await fetch(this.SHEET_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ name, email, phone, origem: 'Checkout - Preço final' })
-      });
+      const payload = JSON.stringify({ name, email, phone, origem: 'Checkout - Preço final' });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(this.SHEET_ENDPOINT, new Blob([payload], { type: 'text/plain;charset=UTF-8' }));
+      } else {
+        fetch(this.SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: payload }).catch(() => {});
+      }
     } catch (e) {}
     if (window.fbq) fbq('track', 'Lead');
     window.location.href = this.props.checkoutUrl || 'https://pay.hotmart.com/N106482320S';
