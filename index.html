@@ -444,9 +444,9 @@ a{text-decoration:none;color:inherit}
       <div style="border-top:1px solid rgba(199,163,109,0.25);padding-top:24px;margin-bottom:4px"><span style="font-size:14px;color:#a68a80">Valor percebido: <span style="text-decoration:line-through">R$ 297+</span></span></div>
       <div style="display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:6px"><span style="font-size:16px;color:#C7A36D">hoje, apenas</span><span style="font-family:'Playfair Display',serif;font-size:clamp(38px,11vw,58px);color:#F9F1E9;line-height:1">R$ 52</span></div>
       <p style="font-size:13px;color:#a68a80;margin-bottom:32px">ou 12x de R$ 4,33 · pagamento único</p>
-      <a href="{{ checkoutUrl }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#C7A36D;color:#3A2029;padding:20px;border-radius:8px;font-size:15px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;box-shadow:0 14px 34px rgba(199,163,109,0.4)" style-hover="background:#E9D4B8;transform:translateY(-2px)">Quero começar agora
+      <button type="button" onClick="{{ openCheckoutModal }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#C7A36D;color:#3A2029;padding:20px;border-radius:8px;font-size:15px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;border:none;cursor:pointer;box-shadow:0 14px 34px rgba(199,163,109,0.4);font-family:'Montserrat',system-ui,sans-serif" style-hover="background:#E9D4B8;transform:translateY(-2px)">Quero começar agora
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
+      </button>
       <p style="font-size:12px;color:#8a7168;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Compra 100% segura · Acesso imediato</p>
     </div>
     <div style="display:flex;align-items:center;gap:20px;justify-content:center;margin-top:36px;background:#FBF6F1;border:1px solid rgba(139,90,60,0.2);border-radius:12px;padding:26px 32px">
@@ -517,11 +517,63 @@ a{text-decoration:none;color:inherit}
   </div>
 </footer>
 
+<!-- ============ MODAL DE CHECKOUT ============ -->
+<sc-if value="{{ checkoutModalOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeCheckoutModal }}" style="position:fixed;inset:0;z-index:200;background:rgba(20,10,13,0.75);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:24px">
+    <div onClick="{{ stopPropagation }}" style="position:relative;width:100%;max-width:440px;background:#3A2029;border:1px solid rgba(199,163,109,0.4);border-radius:16px;padding:40px 34px;box-shadow:0 40px 90px rgba(0,0,0,0.5);text-align:left">
+      <button type="button" onClick="{{ closeCheckoutModal }}" aria-label="Fechar" style="position:absolute;top:14px;right:14px;background:transparent;border:none;color:#D8C3B6;font-size:24px;line-height:1;cursor:pointer;padding:8px">×</button>
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#C7A36D">Último passo</span>
+      <h3 style="font-family:'Playfair Display',serif;font-size:24px;color:#F9F1E9;margin:10px 0 8px;line-height:1.3">Antes de continuar, é só isso</h3>
+      <p style="font-size:14.5px;line-height:1.6;color:#D8C3B6;margin-bottom:26px">Preencha seus dados para garantir o acesso. Você será direcionada ao pagamento seguro em seguida.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <input id="checkout-name" type="text" placeholder="Seu nome completo" autocomplete="name" style="width:100%;padding:15px 16px;border-radius:8px;border:1px solid rgba(199,163,109,0.35);background:rgba(0,0,0,0.18);color:#F9F1E9;font-size:16px;font-family:'Montserrat',system-ui,sans-serif">
+        <input id="checkout-email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" style="width:100%;padding:15px 16px;border-radius:8px;border:1px solid rgba(199,163,109,0.35);background:rgba(0,0,0,0.18);color:#F9F1E9;font-size:16px;font-family:'Montserrat',system-ui,sans-serif">
+        <input id="checkout-phone" type="tel" placeholder="Seu WhatsApp (com DDD)" autocomplete="tel" style="width:100%;padding:15px 16px;border-radius:8px;border:1px solid rgba(199,163,109,0.35);background:rgba(0,0,0,0.18);color:#F9F1E9;font-size:16px;font-family:'Montserrat',system-ui,sans-serif">
+        <sc-if value="{{ checkoutError }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:13px;color:#e0a397">{{ checkoutError }}</p>
+        </sc-if>
+        <button type="button" onClick="{{ submitCheckout }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#C7A36D;color:#3A2029;padding:17px;border-radius:8px;font-size:14px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;border:none;cursor:pointer;margin-top:6px;font-family:'Montserrat',system-ui,sans-serif" style-hover="background:#E9D4B8">{{ checkoutButtonText }}</button>
+        <p style="font-size:12px;color:#a68a80;margin-top:2px">Seus dados estão seguros e não serão compartilhados.</p>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;checkoutUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://pay.hotmart.com/N106482320S&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Conteúdo&quot;}}">
 class Component extends DCLogic {
-  state = { openFaq: 0, videoOn: false, showBuyCta: false };
+  state = { openFaq: 0, videoOn: false, showBuyCta: false, checkoutModalOpen: false, checkoutStatus: 'idle', checkoutError: '' };
+
+  SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxgPOvXmarM6u7ogqdGN8ExztFwg5e_yBEGWphpE0EVCSdzlPwa0rKuoJ2Z2I2DcC5A/exec';
+
+  openCheckoutModal = () => this.setState({ checkoutModalOpen: true, checkoutStatus: 'idle', checkoutError: '' });
+  closeCheckoutModal = () => this.setState({ checkoutModalOpen: false });
+  stopPropagation = (e) => e.stopPropagation();
+
+  submitCheckout = async () => {
+    if (this.state.checkoutStatus === 'loading') return;
+    const name = (document.getElementById('checkout-name') || {}).value?.trim() || '';
+    const email = (document.getElementById('checkout-email') || {}).value?.trim() || '';
+    const phone = (document.getElementById('checkout-phone') || {}).value?.trim() || '';
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validPhone = phone.replace(/\D/g, '').length >= 10;
+    if (!name || !validEmail || !validPhone) {
+      this.setState({ checkoutError: 'Preencha nome, e-mail e WhatsApp válidos.' });
+      return;
+    }
+    this.setState({ checkoutStatus: 'loading', checkoutError: '' });
+    try {
+      await fetch(this.SHEET_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ name, email, phone, origem: 'Checkout - Preço final' })
+      });
+    } catch (e) {}
+    if (window.fbq) fbq('track', 'Lead');
+    window.location.href = this.props.checkoutUrl || 'https://pay.hotmart.com/N106482320S';
+  };
 
   componentDidUpdate() {
     if (this.state.videoOn && !this._videoTrackingStarted) {
@@ -562,6 +614,13 @@ class Component extends DCLogic {
       videoIdle: !this.state.videoOn,
       playVideo: () => this.setState({ videoOn: true }),
       showBuyCta: this.state.showBuyCta,
+      checkoutModalOpen: this.state.checkoutModalOpen,
+      checkoutError: this.state.checkoutError,
+      checkoutButtonText: this.state.checkoutStatus === 'loading' ? 'Enviando...' : 'Continuar para pagamento',
+      openCheckoutModal: this.openCheckoutModal,
+      closeCheckoutModal: this.closeCheckoutModal,
+      stopPropagation: this.stopPropagation,
+      submitCheckout: this.submitCheckout,
       faqs,
       year: new Date().getFullYear()
     };
